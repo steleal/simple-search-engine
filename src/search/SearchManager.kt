@@ -42,7 +42,6 @@ class SearchManager(val helper: ConsoleHelper,
             if (line.contains(query, true)) {
                 if (!builder.isEmpty()) builder.appendln()
                 builder.append(line)
-                break
             }
         }
 
