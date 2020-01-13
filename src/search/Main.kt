@@ -1,46 +1,28 @@
 package search
 
-import java.lang.StringBuilder
 import java.util.*
 
 fun main() {
     val helper = ConsoleHelper(Scanner(System.`in`))
+    val peoplesData = initPeoplesData(helper)
 
-    val numberOfPeople = helper.askInput("Enter the number of people:").toInt()
+    val manager = SearchManager(helper, peoplesData)
+
+    while (true) {
+        manager.printMenu()
+        val cmd = helper.askInput("")
+        manager.doCmd(cmd)
+        if (cmd == "0") break
+    }
+}
+
+fun initPeoplesData(helper: ConsoleHelper): MutableList<String> {
     val peoplesData = mutableListOf<String>()
-
-    helper.print("Enter all people:")
+    val numberOfPeople = helper.askInput("Enter the number of people:").toInt()
     repeat(numberOfPeople) {
-        peoplesData.add(helper.askInput())
+        val personData = helper.askInput()
+        peoplesData.add(personData)
     }
-
-    val numberOfQueries = helper.askInput("Enter the number of search queries:").toInt()
-    repeat(numberOfQueries) {
-        val searchData = helper.askInput("Enter data to search people:")
-        val result = peoplesData.find(searchData)
-        helper.print(result)
-    }
+    return peoplesData
 }
 
-fun List<String>.find(query: String): String {
-    val builder = StringBuilder()
-
-    for (i in this.indices) {
-        val line = this[i]
-        val words = line.split(" ")
-        for (word in words) {
-            if (word.contains(query,true)){
-                builder.append(line)
-                builder.appendln()
-                break
-            }
-        }
-    }
-
-    return if (builder.isEmpty()) {
-        "No matching people found.\n"
-    } else {
-        builder.insert(0, "Found people:\n")
-        builder.toString()
-    }
-}
