@@ -1,10 +1,14 @@
 package search
 
-import java.util.*
+import java.io.File
+import java.util.Scanner
 
-fun main() {
+
+fun main(args: Array<String>) {
     val helper = ConsoleHelper(Scanner(System.`in`))
-    val peoplesData = initPeoplesData(helper)
+    val peoplesData = mutableListOf<String>()
+
+    initPeoplesData(args, peoplesData)
 
     val manager = SearchManager(helper, peoplesData)
 
@@ -16,13 +20,15 @@ fun main() {
     }
 }
 
-fun initPeoplesData(helper: ConsoleHelper): MutableList<String> {
-    val peoplesData = mutableListOf<String>()
-    val numberOfPeople = helper.askInput("Enter the number of people:").toInt()
-    repeat(numberOfPeople) {
-        val personData = helper.askInput()
-        peoplesData.add(personData)
-    }
-    return peoplesData
-}
 
+private fun initPeoplesData(args: Array<String>, peoplesData: MutableList<String>) {
+
+    if (args.size < 2) return
+    if (args[0] != "--data") return
+    val peoplesDataFile = File(args[1])
+    if (!peoplesDataFile.exists()) return
+
+    peoplesDataFile.forEachLine {
+        peoplesData.add(it)
+    }
+}
