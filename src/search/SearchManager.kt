@@ -1,7 +1,7 @@
 package search
 
 class SearchManager(val helper: ConsoleHelper,
-                    val peoplesData: MutableList<String>) {
+                    val peoplesData: SearchData) {
 
     fun printMenu() {
         helper.print()
@@ -28,23 +28,16 @@ class SearchManager(val helper: ConsoleHelper,
     fun findPerson() {
         val searchData = helper.askInput("Enter a name or email to search all suitable people.")
         val result = peoplesData.find(searchData)
-        helper.print(result)
+        val peopleCnt = result.size
+        when (peopleCnt) {
+            0 -> helper.print("No matching people found.")
+            else -> helper.print("$peopleCnt persons found:")
+        }
+        result.forEach(helper::print)
     }
 
     fun printAllPeople() {
         helper.print("=== List of people ===")
-        peoplesData.forEach(helper::print)
-    }
-
-    private fun List<String>.find(query: String): String {
-        val builder = StringBuilder()
-        for (line in this) {
-            if (line.contains(query, true)) {
-                if (!builder.isEmpty()) builder.appendln()
-                builder.append(line)
-            }
-        }
-
-        return if (builder.isEmpty()) "No matching people found." else builder.toString()
+        peoplesData.getAll().forEach(helper::print)
     }
 }
