@@ -26,8 +26,9 @@ class SearchManager(val helper: ConsoleHelper,
     fun incorrectOption() = helper.print("Incorrect option! Try again.")
 
     fun findPerson() {
+        val queryStrategy = helper.askInput("Select a matching strategy: ALL, ANY, NONE")
         val searchData = helper.askInput("Enter a name or email to search all suitable people.")
-        val result = peoplesData.find(searchData)
+        val result = peoplesData.find(searchData, queryStrategy)
         val peopleCnt = result.size
         when (peopleCnt) {
             0 -> helper.print("No matching people found.")
