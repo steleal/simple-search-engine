@@ -6,7 +6,7 @@ import java.util.Scanner
 
 fun main(args: Array<String>) {
     val helper = ConsoleHelper(Scanner(System.`in`))
-    val peoplesData = mutableListOf<String>()
+    val peoplesData = SearchData()
 
     initPeoplesData(args, peoplesData)
 
@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
 }
 
 
-private fun initPeoplesData(args: Array<String>, peoplesData: MutableList<String>) {
+private fun initPeoplesData(args: Array<String>, peoplesData: SearchData) {
 
     if (args.size < 2) return
     if (args[0] != "--data") return
