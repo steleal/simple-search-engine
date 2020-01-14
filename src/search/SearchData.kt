@@ -5,7 +5,7 @@ class SearchData() {
     val invertedIndex = mutableMapOf<String, MutableSet<Int>>()
 
     fun find(word: String): List<String> {
-        val lineNumbers = invertedIndex.getOrDefault(word, mutableSetOf())
+        val lineNumbers = invertedIndex.getOrDefault(word.toLowerCase(), mutableSetOf())
         val result = mutableListOf<String>()
         lineNumbers.forEach{result.add(lines[it])}
         return result
