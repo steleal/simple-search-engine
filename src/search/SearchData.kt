@@ -40,12 +40,12 @@ class SearchData() {
     }
 
     private fun findLinesWithAny(words: List<String>): List<String> {
-        val lineNumbers = invertedIndex.getOrDefault(words[0].toLowerCase(), mutableSetOf()).toMutableList()
-        for (i in 1..words.lastIndex) {
-            val tmpLineNumbers = invertedIndex.getOrDefault(words[i].toLowerCase(), mutableSetOf())
-            tmpLineNumbers.forEach { lineNumbers.add(it) }
+        val lineNumbers = mutableSetOf<Int>()
+        words.forEach {word ->
+            val wordLineNumbers = invertedIndex.get(word)
+            wordLineNumbers?.forEach { lineNumbers.add(it) }
         }
-        return lineNumbers.toLines()
+        return lineNumbers.toList().toLines()
     }
 
     private fun findLinesNotContain(words: List<String>): List<String> {
