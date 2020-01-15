@@ -13,9 +13,7 @@ class SearchData() {
         }
     }
 
-    fun getAll(): List<String> {
-        return lines
-    }
+    fun getAll(): List<String> = lines
 
     fun find(query: String, strategy: String): List<String> {
         if (query.isBlank()) return emptyList()
@@ -33,7 +31,9 @@ class SearchData() {
         val lineNumbers = invertedIndex.get(words[0]) ?: return emptyList()
         words.forEach { word ->
             val wordLineNumbers = invertedIndex.get(word) ?: return emptyList()
-            lineNumbers.forEach { if (!wordLineNumbers.contains(it)) lineNumbers.remove(it) }
+            lineNumbers.forEach {
+                if (!wordLineNumbers.contains(it)) lineNumbers.remove(it)
+            }
         }
         return lineNumbers.toList().toLines()
     }
