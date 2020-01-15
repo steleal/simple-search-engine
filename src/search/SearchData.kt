@@ -57,11 +57,7 @@ class SearchData() {
         return lineNumbers.toLines()
     }
 
-    private fun List<Int>.toLines(): List<String> {
-        val result = mutableListOf<String>()
-        this.forEach { result.add(lines[it]) }
-        return result
-    }
+    private fun List<Int>.toLines(): List<String> = this.map { n -> lines[n] }
 
     private fun addInLines(line: String): Int {
         lines.add(line)
