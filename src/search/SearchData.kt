@@ -31,11 +31,10 @@ class SearchData() {
 
     private fun findLinesWithAll(words: List<String>): List<String> {
         var lineNumbers = invertedIndex.getOrDefault(words[0].toLowerCase(), mutableSetOf()).toList()
-        lineNumbers.
         for (i in 1..words.lastIndex) {
             if (lineNumbers.isEmpty()) break
-            val wordLineNumbers = invertedIndex.getOrDefault(words[i] mutableSetOf())
-            lineNumbers = lineNumbers.filter { wordLineNumbers.contains(it) }
+            val tmpLineNumbers = invertedIndex.getOrDefault(words[i].toLowerCase(), mutableSetOf())
+            lineNumbers = lineNumbers.filter { tmpLineNumbers.contains(it) }
         }
         return lineNumbers.toLines()
     }
