@@ -4,6 +4,19 @@ class SearchData() {
     val lines = mutableListOf<String>()
     val invertedIndex = mutableMapOf<String, MutableSet<Int>>()
 
+    fun add(line: String) {
+        if (line.isBlank()) return
+        val lineNumber = addInLines(line)
+        val words = line.toLowerCase().split(" ")
+        words.forEach {
+            addInvertedIndex(it, lineNumber)
+        }
+    }
+
+    fun getAll(): List<String> {
+        return lines
+    }
+
     fun find(query: String, strategy: String): List<String> {
         if (query.isBlank()) return emptyList()
 
@@ -50,20 +63,7 @@ class SearchData() {
         return result
     }
 
-    fun add(line: String) {
-        if (line.isBlank()) return
-        val lineNumber = addLine(line)
-        val words = line.toLowerCase().split(" ")
-        words.forEach {
-            addInvertedIndex(it, lineNumber)
-        }
-    }
-
-    fun getAll(): List<String> {
-        return lines
-    }
-
-    private fun addLine(line: String): Int {
+    private fun addInLines(line: String): Int {
         lines.add(line)
         return lines.lastIndex
     }
@@ -74,6 +74,4 @@ class SearchData() {
         lineNumbers.add(lineNumber)
         invertedIndex.put(word, lineNumbers)
     }
-
-
 }
