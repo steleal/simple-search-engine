@@ -3,7 +3,6 @@ package search
 import java.io.File
 import java.util.Scanner
 
-
 fun main(args: Array<String>) {
     val helper = ConsoleHelper(Scanner(System.`in`))
     val peoplesData = SearchData()
